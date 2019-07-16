@@ -1,0 +1,103 @@
+<app-panel-box>
+    <span panel-title>Create Issue</span>
+    <div panel-body>
+        <form  name="updatePostForm" enctype="multipart/form-data" [formGroup]="updatePostForm" (ngSubmit)="createPost1()">
+            <div class="form-group">
+              
+              <label>Title</label>
+               <input
+                type="hidden"
+                class="form-control"
+                placeholder="Post Title"
+                formControlName="id"/>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Post Title"
+                formControlName="postTitle"
+              />
+              <div
+                *ngIf="
+                  !updatePostForm.get('postTitle').valid &&
+                  updatePostForm.get('postTitle').touched
+                "
+              >
+                <div
+                  class="alert alert-danger"
+                  *ngIf="updatePostForm.get('postTitle').errors.required"
+                >
+                  Please enter title
+                </div>
+                <div
+                  class="alert alert-danger"
+                  *ngIf="updatePostForm.get('postTitle').errors.minLength"
+                >
+                  Atleast 3 characters
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Post Description</label>
+              <!-- <input
+                type="text"
+                class="form-control"
+                placeholder="Post Description"
+                formControlName="postDescription"
+              /> -->
+              <ejs-richtexteditor formControlName="postDescription"></ejs-richtexteditor>
+              <div
+                *ngIf="
+                  !updatePostForm.get('postDescription').valid &&
+                  updatePostForm.get('postDescription').touched
+                "
+              >
+                <div
+                  class="alert alert-danger"
+                  *ngIf="updatePostForm.get('postDescription').errors.required"
+                >
+                  Please enter Description
+                </div>
+                <div
+                  class="alert alert-danger"
+                  *ngIf="updatePostForm.get('postDescription').errors.minLength"
+                >
+                  Atleast 3 characters
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Assigned To</label>
+               <select (change)="filterForeCasts($event.target.value)" class="form-control" formControlName="assign_to">
+                        <option value="0">--All--</option>
+                        <option *ngFor="let user of allUsers" value={{user.email}}>
+                       {{user.email}}
+                       </option>
+                    </select>
+             </div> 
+
+             <div class="form-group">
+              <label>Status</label>
+               <select (change)="filterForeCasts($event.target.value)" class="form-control" formControlName="status">
+                        <option value="0">--All--</option>
+                        <option *ngFor="let stat of status1" value={{stat.label}}>
+                       {{stat.label}}
+                       </option>
+                    </select>
+             </div> 
+
+            <div class="form-group">
+              <label>Attachement</label>
+                <input name="file" type="file"  multiple (change)="onFileChange($event)">
+
+            </div>
+            <button
+              type="submit"
+              class="btn btn-default"
+              [disabled]="!updatePostForm.valid"
+            >
+              Submit
+            </button>
+          </form>
+    </div>
+</app-panel-box>

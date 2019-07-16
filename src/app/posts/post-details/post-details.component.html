@@ -1,0 +1,87 @@
+
+<app-panel-box *ngIf="post">
+    <span panel-title>
+
+ <div class="clearfix">
+      <h2 class="panel-title pull-left" style="">{{ post.postTitle }}</h2>
+      <div class="btn-group pull-right">
+        <a [routerLink]="['/create-issues',0]"  class="btn btn-default btn-sm">+ NEW</a>
+       
+      </div>
+    </div>
+
+    </span>
+    <div panel-body>
+      <div class="col-md-10">
+      <div>
+        <p [innerHtml]="post.postDescription"></p>
+        <p style="font-weight: bold;">Created By: {{ post.createdBy }}</p>
+      </div>
+      </div>
+      <div class="col-md-1">
+        <button type="button btn-sm" class="btn"  (click)="edit_issue(post)"><span class="glyphicon glyphicon-pencil"></span></button>
+      </div>
+      <div class="col-md-12">
+         <hr>
+      <button
+        class="btn btn-primary btn-sm likes"
+        id="{{ post._id }}"
+        (click)="likes($event)"
+        title="{{ post.likes }}"
+      > WATCH
+        <span class="glyphicon glyphicon-eye-open"> {{ post.likes.length }}</span>
+      </button>
+      <button class="btn btn-danger btn-sm" id="{{ post._id }}" (click)="delPost($event)">
+        DELETE
+      </button>
+      <button
+        class="btn btn-primary cmtBtn"
+        id="{{ post._id }}"
+        (click)="showComments($event)"
+      >
+       {{!shwCmmnts? "Show":"Hide"}} Comments
+      </button>
+      <button
+      class="btn btn-warning"
+      (click)="back()"
+    >
+     Back
+    </button>
+  </div>
+    <br>
+     <br>
+      <div [hidden]="true" class="cmtDiv" id="{{ post._id }}">
+        <div class="addCmtDiv" id="{{ post._id }}">
+           <br>
+            <textarea class="form-control rounded-0 cmtText" placeholder="Add Comment"
+            
+            id="{{ post._id }}" rows="5"></textarea>
+
+          <!-- <input
+            type="text"
+            placeholder="Add Comment"
+            class="cmtText"
+            id="{{ post._id }}"
+          /> -->
+          <button
+            class="btn btn-primary addCmt" style="padding-top:5px;"
+            id="{{ post._id }}"
+            (click)="addCmt($event)">
+            Submit Comment
+          </button>
+        </div>
+        <div *ngFor="let comment of post.comments">
+
+        <div class="container">
+          
+        <p>{{ comment.text }}</p>
+        <span class="time-right">{{ comment.author }}</span>
+        </div>
+
+          
+        </div>
+    </div>
+    </div>
+  </app-panel-box>
+
+
